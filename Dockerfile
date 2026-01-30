@@ -18,6 +18,6 @@ RUN npm ci
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/src/infrastructure/database ./src/infrastructure/database
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD ["node", "dist/main"]
