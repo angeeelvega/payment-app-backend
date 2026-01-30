@@ -27,7 +27,7 @@ primary_region = 'ams'
   processes = ['app']
 
 [deploy]
-  release_command = "npm run migration:run && npm run seed"
+  release_command = "sh -c \"npm run migration:run && npm run seed\""
 
 [[vm]]
   cpu_kind = 'shared'
