@@ -7,6 +7,9 @@ import { DeliverySchema } from './entities/delivery.schema';
 
 config();
 
+const sslEnabled = process.env.DB_SSL === 'true';
+const sslRejectUnauthorized = process.env.DB_SSL_REJECT_UNAUTHORIZED !== 'false';
+
 export const AppDataSource = new DataSource({
   type: 'postgres',
   host: process.env.DB_HOST || 'localhost',
@@ -14,6 +17,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD || 'postgres',
   database: process.env.DB_DATABASE || 'payment_app',
+  ssl: sslEnabled ? { rejectUnauthorized: sslRejectUnauthorized } : false,
   entities: [ProductSchema, CustomerSchema, TransactionSchema, DeliverySchema],
   migrations: ['src/infrastructure/database/migrations/*.ts'],
   synchronize: process.env.DB_SYNCHRONIZE === 'true',

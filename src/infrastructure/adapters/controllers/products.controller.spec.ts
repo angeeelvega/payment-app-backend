@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { ProductsController } from './products.controller';
 import { GetProductsPort, GET_PRODUCTS_PORT } from '@application/ports/in/get-products.port';
+import { GET_PRODUCT_PORT } from '@application/ports/in/get-product.port';
+import { GET_PRODUCT_QUOTE_PORT } from '@application/ports/in/get-product-quote.port';
 import { Product } from '@domain/entities/product.entity';
 import { Result } from '@shared/result';
 
@@ -33,9 +35,9 @@ describe('ProductsController', () => {
   ];
 
   beforeEach(async () => {
-    const mockGetProductsUseCase = {
-      execute: jest.fn(),
-    };
+    const mockGetProductsUseCase = { execute: jest.fn() };
+    const mockGetProductUseCase = { execute: jest.fn() };
+    const mockGetProductQuoteUseCase = { execute: jest.fn() };
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProductsController],
@@ -43,6 +45,14 @@ describe('ProductsController', () => {
         {
           provide: GET_PRODUCTS_PORT,
           useValue: mockGetProductsUseCase,
+        },
+        {
+          provide: GET_PRODUCT_PORT,
+          useValue: mockGetProductUseCase,
+        },
+        {
+          provide: GET_PRODUCT_QUOTE_PORT,
+          useValue: mockGetProductQuoteUseCase,
         },
       ],
     }).compile();
