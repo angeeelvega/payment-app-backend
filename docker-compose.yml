@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: payment-app-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: payment_app
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - payment-app-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: payment-app-backend
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: payment_app
+      DB_SYNCHRONIZE: "false"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - payment-app-network
+    command: sh -c "npm run migration:run && npm run seed && npm run start:prod"
+
+volumes:
+  postgres_data:
+
+networks:
+  payment-app-network:
+    driver: bridge
