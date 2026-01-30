@@ -431,6 +431,15 @@ npm run test:e2e
 
 
 
+### Coverage (última ejecución)
+
+- Stmts: 95.28%
+- Branch: 77.77%
+- Funcs: 97.32%
+- Lines: 94.97%
+
+El reporte HTML se genera en `coverage/`.
+
 ### Tarjetas de Prueba 
 
 Para probar pagos en el ambiente sandbox :
@@ -537,7 +546,7 @@ El proyecto incluye logging detallado en todo el flujo de pago:
 [ProcessPaymentUseCase] Step 1: Fetching transaction from database
 [ProcessPaymentUseCase] Step 2: Validating card token format
 [ProcessPaymentUseCase] Step 3: Calling Payment Gateway
-[PaymentGatewayAdapter] Creating payment gateway transaction - Amount: 150000 (15000000 cents)
+[PaymentGatewayAdapter] Creating payment gateway transaction - Amount: 150000 (15000000)
 [ProcessPaymentUseCase] Step 4: Payment approved, updating transaction
 [ProcessPaymentUseCase] Step 5: Updating product stock
 [ProcessPaymentUseCase] Stock updated: 100 -> 99 (decreased by 1)

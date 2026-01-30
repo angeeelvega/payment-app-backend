@@ -1,4 +1,4 @@
-import { UpdateNumericPrecision1738084800000 } from './1738084800000-UpdateNumericPrecision';
+import { UpdateNumericPrecision1738084800000 } from '../1738084800000-UpdateNumericPrecision';
 import { QueryRunner } from 'typeorm';
 
 describe('UpdateNumericPrecision Migration', () => {
