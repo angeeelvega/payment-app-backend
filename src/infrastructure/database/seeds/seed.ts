@@ -9,10 +9,8 @@ async function seed() {
 
     const productRepository = AppDataSource.getRepository(ProductSchema);
 
-    // Clear existing products
     await productRepository.clear();
 
-    // Create dummy products
     const products = [
       {
         id: uuidv4(),
@@ -29,7 +27,8 @@ async function seed() {
         description: 'Apple iPhone 14 Pro 128GB, 6.1" Super Retina XDR display, A16 Bionic chip',
         price: 4500000,
         stock: 15,
-        imageUrl: 'https://images.unsplash.com/photo-1592286927505-2fd0f2d0e7d1?w=500',
+        imageUrl:
+          'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-model-unselect-gallery-1-202209?wid=500&hei=500&fmt=jpeg&qlt=95&',
       },
       {
         id: uuidv4(),
@@ -78,6 +77,47 @@ async function seed() {
         price: 1500000,
         stock: 25,
         imageUrl: 'https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=500',
+      },
+      {
+        id: uuidv4(),
+        name: 'AirPods Pro (2nd Gen)',
+        description:
+          'Apple AirPods Pro 2nd Generation with Active Noise Cancellation and USB-C case',
+        price: 1100000,
+        stock: 30,
+        imageUrl: 'https://images.unsplash.com/photo-1585386959984-a41552231693?w=500',
+      },
+      {
+        id: uuidv4(),
+        name: 'PlayStation 5',
+        description: 'Sony PlayStation 5 Console with ultra-high speed SSD and 4K gaming support',
+        price: 2600000,
+        stock: 7,
+        imageUrl: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=500',
+      },
+      {
+        id: uuidv4(),
+        name: 'Google Pixel 8',
+        description: 'Google Pixel 8 128GB, 6.2" OLED display, Tensor G3 processor',
+        price: 3200000,
+        stock: 14,
+        imageUrl: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500',
+      },
+      {
+        id: uuidv4(),
+        name: 'Dell XPS 13',
+        description: 'Dell XPS 13 laptop with Intel Core i7, 16GB RAM, 512GB SSD, 13.4" display',
+        price: 5200000,
+        stock: 6,
+        imageUrl: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=500',
+      },
+      {
+        id: uuidv4(),
+        name: 'Kindle Paperwhite',
+        description: 'Kindle Paperwhite 8GB with 6.8" glare-free display and adjustable warm light',
+        price: 650000,
+        stock: 22,
+        imageUrl: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=500',
       },
     ];
 
