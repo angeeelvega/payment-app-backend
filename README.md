@@ -246,7 +246,7 @@ npm run migration:run
 npm run seed
 ```
 
-Esto creará 8 productos de ejemplo con stock disponible.
+Esto creará productos en la base de datos.
 
 ### 7. Iniciar el servidor
 
@@ -270,150 +270,6 @@ El servidor estará disponible en:
 La documentación completa de la API está disponible en:
 **http://localhost:3000/api/docs**
 
-### Endpoints Principales
-
-#### Products
-
-```http
-GET /api/v1/products
-```
-Obtiene todos los productos disponibles con su stock.
-
-**Response:**
-```json
-[
-  {
-    "id": "uuid",
-    "name": "Laptop HP Pavilion 15",
-    "description": "Laptop HP Pavilion 15 with Intel Core i5...",
-    "price": 2500000,
-    "stock": 10,
-    "imageUrl": "https://...",
-    "createdAt": "2024-01-01T00:00:00.000Z",
-    "updatedAt": "2024-01-01T00:00:00.000Z"
-  }
-]
-```
-
-#### Customers
-
-```http
-POST /api/v1/customers
-```
-Crea un nuevo cliente.
-
-**Request Body:**
-```json
-{
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "phone": "+573001234567",
-  "address": "Calle 123 #45-67",
-  "city": "Bogotá"
-}
-```
-
-#### Transactions
-
-```http
-POST /api/v1/transactions
-```
-Crea una nueva transacción en estado PENDING.
-
-**Request Body:**
-```json
-{
-  "customerId": "uuid",
-  "productId": "uuid",
-  "quantity": 2
-}
-```
-
-**Response:**
-```json
-{
-  "id": "uuid",
-  "transactionNumber": "TRX-1234567890-1234",
-  "customerId": "uuid",
-  "productId": "uuid",
-  "quantity": 2,
-  "productAmount": 5000000,
-  "baseFee": 1000,
-  "deliveryFee": 5000,
-  "totalAmount": 5006000,
-  "status": "PENDING",
-  "createdAt": "2024-01-01T00:00:00.000Z",
-  "updatedAt": "2024-01-01T00:00:00.000Z"
-}
-```
-
-```http
-POST /api/v1/transactions/:id/payment
-```
-Procesa el pago de una transacción usando un token de tarjeta (PCI-DSS compliant).
-
-**Request Body:**
-```json
-{
-  "cardToken": "<token_obtenido_del_payment_gateway>",
-  "cardHolder": "NOMBRE TITULAR",
-  "installments": 1,
-  "customerEmail": "email@ejemplo.com"
-}
-```
-
-> **Nota:** Consulta la documentación completa en **Swagger**: `http://localhost:3000/api/docs`
-
-```http
-GET /api/v1/transactions/:id
-```
-Obtiene el detalle de una transacción.
-
-## Tokenización de Tarjetas (Frontend)
-
-Antes de procesar un pago, el frontend debe tokenizar la tarjeta directamente con el Payment Gateway:
-
-```javascript
-// 1. Tokenizar la tarjeta con el Payment Gateway (usando tu llave pública)
-const tokenizeCard = async (cardData) => {
-  const response = await fetch(`${PAYMENT_GATEWAY_API_URL}/tokens/cards`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${TU_LLAVE_PUBLICA}`
-    },
-    body: JSON.stringify({
-      number: cardData.number,
-      cvc: cardData.cvc,
-      exp_month: cardData.expMonth,
-      exp_year: cardData.expYear,
-      card_holder: cardData.holder
-    })
-  });
-  
-  const data = await response.json();
-  return data.data.id; // Retorna el token
-};
-
-// 2. Procesar el pago con el token
-const processPayment = async (transactionId, cardToken, email) => {
-  const response = await fetch(`${API_URL}/transactions/${transactionId}/payment`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      cardToken,
-      cardHolder: 'NOMBRE DEL TITULAR',
-      installments: 1,
-      customerEmail: email
-    })
-  });
-  
-  return await response.json();
-};
-```
-
-> **Nota:** Consulta la documentación de tu Payment Gateway para obtener tus llaves de API.
-
 ## 🧪 Testing
 
 ### Ejecutar tests
@@ -428,8 +284,6 @@ npm run test:cov
 # E2E tests
 npm run test:e2e
 ```
-
-
 
 ### Coverage (última ejecución)
 
@@ -463,7 +317,6 @@ Para probar pagos en el ambiente sandbox :
    - `GET /api/v1/products`
 
 2. **Información de Pago y Entrega** → Cliente ingresa datos
-   - Crear cliente: `POST /api/v1/customers`
    - Crear transacción: `POST /api/v1/transactions`
 
 3. **Tokenización (Frontend)** → Se tokeniza la tarjeta 
